@@ -45,18 +45,21 @@ function crear(){
     }else{
         alert('Menor de Edad, regrese con un mayor..')
     }
-
 }
 
 
 // Ver carrito 
 function revisar(){
     let dni = parseInt(prompt('Ingrese su documento para buscar su compra: '))
-    let cliente = clientes.find(a => a.dni === dni)
-    let indice = clientes.indexOf(cliente)
-    let producto = carrito[indice]
-    console.log(cliente)
-    console.log(producto)
+    let booleano = clientes.some(doc => doc.dni === dni)
+    
+    if(booleano === true){
+        let cliente = clientes.find(a => a.dni === dni)
+        let indice = clientes.indexOf(cliente)
+        let producto = carrito[indice]
+        console.log(cliente)
+        console.log(producto)
+    }else{alert('Ingrese un dni valido!')}
     
 }
 function mostrarTodo() {
@@ -68,22 +71,59 @@ function mostrarTodo() {
     })
 }
 
+
 // Modificar Compra
 function modificar(){
+    let dni = parseInt(prompt('Ingrese el dni con el que realizo la compra'))
+    let booleano = clientes.some(doc => doc.dni === dni)
     
+    if(booleano === true){
+        let pregunta = parseInt(prompt('Que desea modificar, el usuario(1) o la compra(2) seleccione un numero: '))
+        let encontrarCliente = clientes.find(a => a.dni === dni)
+        let indice = clientes.indexOf(encontrarCliente) 
+
+        if (pregunta === 1){
+            let nuevaEdad = parseInt(prompt('Ingrese su edad a actualizar: '))
+            let nuevaNombre = prompt('Ingrese su nombre a actualizar: ')
+
+            clienteNuevo = new Cliente(nuevaNombre, dni, nuevaEdad)
+            clientes.splice(indice, 1, clienteNuevo)
+            console.log(clientes[indice])
+
+        }else if (pregunta === 2){
+            let nuevoProducto = prompt('Ingrese el nombre del nuevo producto: ')
+            let nuevoPrecio = parseInt(prompt('Ingrese su nuevo precio: '))
+            let nuevoCantidad = parseInt(prompt('Ingrese su nueva cantidad: '))
+
+            carrito[indice].producto = nuevoProducto
+            carrito[indice].precio = nuevoPrecio
+            carrito[indice].cantidad = nuevoCantidad
+            console.log(carrito[indice])
+
+        }else{alert('INGRESE UNA OPCION VALIDA')}
+    }else{alert('Ingrese un dni valido!')}
 }
 
 
 // Eliminar Compra
 function eliminar(){
+    let dni = parseInt(prompt('Ingrese el dni con el que realizo la operacion: '))
+    let booleano = clientes.some(doc => doc.dni === dni)
     
+    if(booleano === true){
+        let encontrarCliente = clientes.find(doc => doc.dni === dni)
+        let indice = clientes.indexOf(encontrarCliente)
+        alert(`El cliente con el nombre ${clientes[indice].nombre} fue eliminad@ del sistema, nv ;) `)
+        clientes.splice(indice, 1)
+        carrito.splice(indice, 1)
+    }else{alert('Ingrese un dni valido!')}
 }
 
 
 
 
 // ------------- CONTEINER
-
+alert('BIENVENIDO A LA PAGINA WEB DEL CENTRAL DE BEBIDAS DE MDZ-ARG :)')
 opcion = vista()
 while (opcion > 0 & opcion < 5){
     if (opcion === 1){
@@ -98,7 +138,7 @@ while (opcion > 0 & opcion < 5){
     vista()
 }
 mostrarTodo()
-alert('SALIO DEL SISTEMA')
+alert('SALIO DEL SISTEMA DEL CENTRAL DE BEBIDAS, HASTA PRONTO!')
 
 
 

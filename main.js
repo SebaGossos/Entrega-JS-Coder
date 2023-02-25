@@ -1,147 +1,175 @@
-const clientes = []
-const carrito = []
+// Creamos Nuestros Productos con Objetos
+let id = 0 // => Variable id Global
 
-// ------------- VIEW
-
-function vista(){
-    opcion = parseInt(prompt('Seleccione una opcion del 1 al 4 \n 1) Agregar compra al carrito \n 2) ver carrito de compra \n 3) modificar Carrito \n 4) Eliminar compra \n  - Si desea salir ingrese cualquier otro numero'))
-    return opcion
-}
-
-// ------------- MODEL 
-
-// Agregar Carrito
-class Cliente{
-
-    constructor(nombre, dni, edad){
-        this.nombre = nombre
-        this.dni = dni
-        this.edad = edad
-    }
-}
 class Producto{
-    constructor(producto, precio, cantidad){
-        this.producto = producto
-        this.precio = precio
-        this.cantidad = cantidad
+    constructor( imagen, nombre, precio, stock){
+        this.id = id 
+        this.imagen = imagen
+        this.nombre = nombre
+        this.precio= precio
+        this.cantidad = 1
+        this.stock = stock
+        id = id + 1
     }
-}
-function crear(){
-    edad = parseInt(prompt('Ingrese su edad: '))
-    if(edad > 17){
 
-        //Cliente
-        clienteNombre = prompt('Ingrese su nombre: ')
-        clienteDni = parseInt(prompt('Ingrese su numero de documento: '))
-        clienteNuevo = new Cliente(clienteNombre, clienteDni, edad)
-        clientes.push(clienteNuevo)
-
-        //Producto
-        productoNombre = prompt('Ingrese el nombre del producto: ')
-        productoPrecio = parseFloat(prompt('Ingrese el precio del producto: '))
-        productoCantidad = parseInt(prompt('Ingrese la cantidad del producto: '))
-        productoNuevo = new Producto(productoNombre, productoPrecio, productoCantidad);
-        carrito.push(productoNuevo)
-    }else{
-        alert('Menor de Edad, regrese con un mayor..')
-    }
 }
 
+const bacardi = new Producto('build/img/bacardi', 'Bacardí', 3499, 12)
+const cocaCola = new Producto('build/img/coca', 'Coca Cola', 599, 84)
+const fernet = new Producto('build/img/fernet', 'Fernet', 1999, 55)
+const gancia = new Producto('build/img/gancia', 'Gancia', 1199, 16)
+const jackDaniels = new Producto('build/img/jackDaniels', 'Jack Daniel`s', 9999, 29)
+const terma = new Producto('build/img/terma', 'Terma', 299, 33)
 
-// Ver carrito 
-function revisar(){
-    let dni = parseInt(prompt('Ingrese su documento para buscar su compra: '))
-    let booleano = clientes.some(doc => doc.dni === dni)
-    
-    if(booleano === true){
-        let cliente = clientes.find(a => a.dni === dni)
-        let indice = clientes.indexOf(cliente)
-        let producto = carrito[indice]
-        console.log(cliente)
-        console.log(producto)
-    }else{alert('Ingrese un dni valido!')}
-    
+//Crear un array con catálogo de productos
+
+const productos = [bacardi, cocaCola, fernet, gancia, jackDaniels, terma]
+
+// Array para el carrito
+
+let carrito = []
+
+// CARGAR CARRITO DESDE LOCALSTORAGE
+// Si hay algo en el localStorage lo cargamos en el carrito, si no es porque esta vacio.
+
+if(localStorage.getItem('carrito')){
+    carrito = JSON.parse(localStorage.getItem('carrito'))
 }
-function mostrarTodo() {
-    clientes.forEach(cliente =>{
-        console.log(cliente)
+
+// Modificamos el DOM
+
+const contenedorProductos = document.getElementById('contenedorProductos')
+
+
+// Mostrar los productos
+const mostrarProductos = () => {
+    contenedorProductos.innerHTML = ''
+    productos.forEach( producto => {
+        const li = document.createElement('li')
+        producto.nombre === 'Coca Cola' ? li.classList.add('card--coca'): li.classList.add('card')
+        li.innerHTML = `<div class="card__imagen">
+                            <picture>
+                                <source srcset="${producto.imagen}.avif" type="image/avif">
+                                <source srcset="${producto.imagen}.webp" type="image/webp">
+                                <img loading="lazy" src="${producto.imagen}.jpg" width="" height="" alt="imagen bebida">
+                            <picture>
+                        </div>
+                            <h2 class="card__heading">${producto.nombre}</h2>
+                            <p class="card__stock">Stock: ${producto.stock} Unidades</p>
+                            <p class="card__price">$ ${producto.precio}</p>
+                        <button class="card__boton" id="boton${producto.id}">Agregar</button>`
+        contenedorProductos.appendChild(li)
+
+        // Agregar productos al carrito
+        const boton = document.getElementById(`boton${producto.id}`)
+        boton.addEventListener('click', () => {
+            agregarAlCarrito(producto.id)
+        })
     })
+}
+mostrarProductos()
+const agregarAlCarrito = (id) => {
+    const productoCarrito = carrito.find(producto => producto.id === id)
+    if(productoCarrito) {
+        productoCarrito.cantidad++
+        productoCarrito.stock--
+    }else {
+        const producto = productos.find(producto => producto.id === id)
+        producto.stock--
+        carrito.push(producto)
+    }
+    // ALMACENAR EN LOCALSTORAGE 
+    localStorage.setItem('carrito', JSON.stringify(carrito))
+    mostrarProductos()
+    calcularTotal()
+}
+
+// MOSTRAR CARRITO
+const contenedorCarrito = document.getElementById('carritoJs')
+const verCarrito = document.getElementById('verCarrito')
+
+verCarrito.addEventListener('click', () => {
+    mostrarCarrito()
+})
+
+
+const mostrarCarrito = () => {
+    contenedorCarrito.innerText = ''
     carrito.forEach(producto => {
-        console.log(producto);
+        const li = document.createElement('li')
+        li.classList.add('card')
+        li.innerHTML = `<div class="card__imagen">
+                            <picture>
+                                <source srcset="${producto.imagen}.avif" type="image/avif">
+                                <source srcset="${producto.imagen}.webp" type="image/webp">
+                                <img loading="lazy" src="${producto.imagen}.jpg" width="" height="" alt="imagen bebida">
+                            <picture>
+                        </div>
+                        <h2 class="card__heading">${producto.nombre}</h2>
+                        <div class="mostrar">
+                            <p class="mostrar__texto"> Cantidad: ${producto.cantidad}</p>
+                            <button class="mostrar__mas" id="agregar">+</button>
+                            <button class="mostrar__menos" id="restar">-</button>
+                        </div>
+                        <button class="card__boton" id="eliminar${producto.id}">Eliminar</button>`
+        contenedorCarrito.appendChild(li)
+
+        // Eliminar Productos desde el carrito
+        const boton = document.getElementById(`eliminar${producto.id}`)
+        boton.addEventListener('click', () => {
+            eliminarDelCarrito(producto.id)
+        })
     })
+    calcularTotal()
 }
 
+// Eliminar producto del carrito
 
-// Modificar Compra
-function modificar(){
-    let dni = parseInt(prompt('Ingrese el dni con el que realizo la compra'))
-    let booleano = clientes.some(doc => doc.dni === dni)
+const eliminarDelCarrito = (id) => {
+    const producto = carrito.find(producto => producto.id === id)
+    const indice = carrito.indexOf(producto)
+
+    cantidad = producto.cantidad
+    newId = producto.id
+    productos[newId].stock += cantidad
+    productos[newId].cantidad = 1
     
-    if(booleano === true){
-        let pregunta = parseInt(prompt('Que desea modificar, el usuario(1) o la compra(2) seleccione un numero: '))
-        let encontrarCliente = clientes.find(a => a.dni === dni)
-        let indice = clientes.indexOf(encontrarCliente) 
+    carrito.splice(indice, 1)
+    mostrarProductos()
+    mostrarCarrito() 
+    // localStorage
+    localStorage.setItem('carrito', JSON.stringify(carrito))
+}
 
-        if (pregunta === 1){
-            let nuevaEdad = parseInt(prompt('Ingrese su edad a actualizar: '))
-            let nuevaNombre = prompt('Ingrese su nombre a actualizar: ')
+// Mostrar el total de la compra 
+const total = document.getElementById('total')
 
-            clienteNuevo = new Cliente(nuevaNombre, dni, nuevaEdad)
-            clientes.splice(indice, 1, clienteNuevo)
-            console.log(clientes[indice])
-
-        }else if (pregunta === 2){
-            let nuevoProducto = prompt('Ingrese el nombre del nuevo producto: ')
-            let nuevoPrecio = parseInt(prompt('Ingrese su nuevo precio: '))
-            let nuevoCantidad = parseInt(prompt('Ingrese su nueva cantidad: '))
-
-            carrito[indice].producto = nuevoProducto
-            carrito[indice].precio = nuevoPrecio
-            carrito[indice].cantidad = nuevoCantidad
-            console.log(carrito[indice])
-
-        }else{alert('INGRESE UNA OPCION VALIDA')}
-    }else{alert('Ingrese un dni valido!')}
+const calcularTotal = () => {
+    let totalCompra = 0
+    carrito.forEach(producto => {
+        totalCompra += producto.precio * producto.cantidad
+    })
+    total.innerHTML = `Total: $${totalCompra}`
 }
 
 
-// Eliminar Compra
-function eliminar(){
-    let dni = parseInt(prompt('Ingrese el dni con el que realizo la operacion: '))
-    let booleano = clientes.some(doc => doc.dni === dni)
+// Vaciar TODO el Carrito
+const vaciarCarrito = document.getElementById('vaciarCarrito')
+vaciarCarrito.addEventListener('click', () => {
+    eliminarTodoElCarrito()
+})
+
+eliminarTodoElCarrito = () => {
+    carrito.forEach(producto => {
+        cantidad = producto.cantidad
+        newId = producto.id
+        productos[newId].stock += cantidad
+        productos[newId].cantidad = 1
+    })
+    carrito = []
+    mostrarCarrito()
+    mostrarProductos()
     
-    if(booleano === true){
-        let encontrarCliente = clientes.find(doc => doc.dni === dni)
-        let indice = clientes.indexOf(encontrarCliente)
-        alert(`El cliente con el nombre ${clientes[indice].nombre} fue eliminad@ del sistema, nv ;) `)
-        clientes.splice(indice, 1)
-        carrito.splice(indice, 1)
-    }else{alert('Ingrese un dni valido!')}
+    // vaciar localStorage 
+    localStorage.clear()
 }
-
-
-
-
-// ------------- CONTEINER
-alert('BIENVENIDO A LA PAGINA WEB DEL CENTRAL DE BEBIDAS DE MDZ-ARG :)')
-opcion = vista()
-while (opcion > 0 & opcion < 5){
-    if (opcion === 1){
-        crear()
-    }else if(opcion === 2){
-        revisar()
-    }else if(opcion === 3){
-        modificar()
-    }else if (opcion === 4){
-        eliminar()
-    }
-    vista()
-}
-mostrarTodo()
-alert('SALIO DEL SISTEMA DEL CENTRAL DE BEBIDAS, HASTA PRONTO!')
-
-
-
-
-
-

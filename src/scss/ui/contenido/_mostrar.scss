@@ -1,0 +1,16 @@
+@use '../../base/variables' as v;
+@use '../../base/mixins' as m;
+
+.mostrar{
+    @include m.grid(3,3rem);
+    &__texto{
+        color: v.$grisOscuro;
+        font-size: 3.2rem;
+        font-weight: 600;
+        margin: 0;
+    }
+    &__mas,
+    &__menos{
+        @include m.boton2(v.$secundario, v.$blanco);
+    }
+}

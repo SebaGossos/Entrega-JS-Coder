@@ -1,0 +1,12 @@
+.carrito{
+
+    &__opciones{
+        display: flex;
+        justify-content: space-around;
+    }
+    &__boton{
+        display: inline-block;
+        width: 33%;
+    }
+}
+

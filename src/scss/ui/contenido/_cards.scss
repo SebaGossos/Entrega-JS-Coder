@@ -1,0 +1,54 @@
+@use '../../base/variables' as v;
+@use '../../base/mixins' as m;
+
+.cards{
+    text-align: center;
+    justify-items: center;
+    @include m.tablet {
+        @include m.grid(2, v.$separacion);
+    }
+    @include m.desktop {
+        @include m.grid(3, v.$separacion);
+    }
+}
+.card{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &__heading{
+        font-weight: 400;
+    }
+    &__stock{
+        margin: 0 0 2rem;
+        font-size: 2.7rem; 
+        font-weight: 600;
+        color: v.$secundario;
+
+    }
+    &__price{
+        color: v.$grisOscuro;
+        font-size: 3.2rem;
+        font-weight: 600;
+        margin: 0;
+    }
+    &__boton{
+        @include m.boton(v.$primario, v.$blanco);
+        transition: background-color .33s;
+        &:hover{
+            background-color: v.$secundario;
+            border: 0;
+        } 
+    }
+    &--coca{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        img{
+            max-height: 36.6rem;
+            margin: 0 auto;
+        } 
+    }
+}

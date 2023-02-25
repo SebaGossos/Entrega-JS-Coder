@@ -1,14 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Central De Bebidas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./build/css/app.css">
 </head>
+
 <body>
-    <h1>Segunda (2) Pre Entrega!</h1>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="contenedor header__logo">
+            <picture>
+                <source srcset="build/img/central.avif" type="image/avif">
+                <source srcset="build/img/central.webp" type="image/webp">
+                <img class="header__imagen" loading="lazy" src="build/img/central.jpg" width="" height=""
+                    alt="logo Central Bebidas">
+                <picture>
+        </div>
+    </header>
+
+    <!-- Contenido -->
+    <main class="principal">
+        <h1 class="principal__heading">Nuestros productos!</h1>
+        <ul id="contenedorProductos" class="contenedor seccion cards">
+            <!-- Added nodes by JS -->
+        </ul>
+    </main>
+
+    <!-- Mostrar Carrito -->
+    <section class="contenedor carrito">
+        <h2 class="carrito__heading principal__heading">Carrito de Compras:</h2>
+        <p id="total"></p>
+        <div class="carrito__opciones">
+            <button class="card__boton carrito__boton" id="verCarrito">Mostrar Carrito</button>
+            <button class="card__boton carrito__boton" id="vaciarCarrito">Vaciar Carrito</button>
+        </div>
+        <ul class="cards " id="carritoJs">
+            <!-- Added nodes by JS -->
+        </ul>
+    </section>
+
     <script src="./main.js"></script>
     <!-- <script src="./main2.js"></script> -->
 </body>
+
 </html>

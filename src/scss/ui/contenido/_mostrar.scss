@@ -3,6 +3,7 @@
 
 .mostrar{
     @include m.grid(3,3rem);
+    margin: 0 0 2rem;
     &__texto{
         color: v.$grisOscuro;
         font-size: 3.2rem;

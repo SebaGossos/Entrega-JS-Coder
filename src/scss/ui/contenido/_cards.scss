@@ -31,7 +31,7 @@
         color: v.$grisOscuro;
         font-size: 3.2rem;
         font-weight: 600;
-        margin: 0;
+        margin: 0 0 2rem;
     }
     &__boton{
         @include m.boton(v.$primario, v.$blanco);

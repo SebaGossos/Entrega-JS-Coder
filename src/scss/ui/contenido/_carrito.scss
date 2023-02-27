@@ -1,8 +1,17 @@
-.carrito{
+@use '../../base/mixins' as m;
+@use '../../base/variables' as v;
 
+.carrito{
+    &__total{
+        color: v.$secundario;
+        font-weight: 600;
+        font-size: 5rem;
+
+    }
     &__opciones{
         display: flex;
         justify-content: space-around;
+        margin-bottom: v.$separacion;
     }
     &__boton{
         display: inline-block;

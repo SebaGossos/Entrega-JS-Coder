@@ -143,6 +143,7 @@ const agregarAlCarrito = (id) => {
 
 // Calcular el total de la compra 
 const total = document.getElementById('total')
+total.className = 'carrito__total'
 const calcularTotal = () => {
     let totalCompra = 0
     carrito.forEach(producto => {

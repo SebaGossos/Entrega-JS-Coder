@@ -5,9 +5,12 @@
     &__total{
         color: v.$quinto;
         font-weight: 600;
-        font-size: 5rem;
-        margin: 0;
-        
+        font-size: 4rem;
+        margin: 0 0 v.$separacion;
+        text-align: center;
+        @include m.desktop{
+            margin: 0;
+        }
     }
     &__boton{
         display: block;
@@ -27,9 +30,19 @@
     &__comprar{
         padding: 2rem 8rem;
         font-size: 5rem;
+        display: block;
+        margin: 0 auto;
         &:hover{
             background-color: v.$terciario;
         } 
     }
+    &__menuPrincipal{
+        
+        @include m.desktop{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    } 
 }
 

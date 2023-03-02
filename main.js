@@ -87,6 +87,9 @@ verCarrito.addEventListener('click', () => {
     if (carrito.length > 0){
         mostrarCarrito()
     }else{
+        mostrarTituloVaciar.innerHTML = ''
+        contenedorCarrito.innerHTML = ''
+        opcionesCarrito.innerHTML = ''
         alert('No hay productos en el carrito!')
     }
 })
@@ -155,16 +158,21 @@ const mostrarOpcionesCarrito = () =>{
     calcularTotal()
     // Finalizar Compra
     const botonComprar = document.getElementById('comprar')
-    botonComprar.addEventListener('click', () => comprarProductos(calcularTotal()))
+    botonComprar.addEventListener('click', () => {
+        comprarProductos(calcularTotal())
+    })
 }
 
 
                     
 const contenedorCompra = document.getElementById('contenedorCompra')
-
 const comprarProductos = (total) => {
-    const comprarUl = document.getElementById('finalizarCompra')
-    resetearHtml.className = 'contenedor principal cards'
+    contenedorCompra.innerText = ''
+    mostrarTituloVaciar.innerHTML = ''
+    contenedorCarrito.innerHTML = ''
+    opcionesCarrito.innerHTML = ''
+    const ul = document.createElement('ul')
+    ul.className = 'contenedor principal cards'
     carrito.forEach(producto => {
         const li = document.createElement('li')
         li.className='card'
@@ -179,19 +187,26 @@ const comprarProductos = (total) => {
                         <p class="mostrar__cantidad"> Cantidad: ${producto.cantidad}</p>
                         <p class="mostrar__total"> Total: $${producto.cantidad * producto.precio}</p>
                         `
-        comprarUl.appendChild(li)
+        ul.appendChild(li)
     })
-    contenedorCompra.innerHTML = `  <p class="carrito__total" id="total">Total: $${total}</p>
-                                    <button class="card__boton carrito__comprar" id="menuPrincipal">Menu Principal</button>
+    contenedorCompra.appendChild(ul)
+    const volverMenu = document.getElementById('volverMenu')
+    volverMenu.innerHTML = `     
+                                        <p class="carrito__total" id="total">Compra Realizada de: $${total}!!</p>
+                                        <button class="card__boton carrito__comprar" id="menuPrincipal">Menu Principal</button>
                                 `
                                 
                                 
     const botonMenuPrincipal = document.getElementById('menuPrincipal')
     botonMenuPrincipal.onclick = () => {
-
+        contenedorCompra.innerHTML = ''
+        volverMenu.innerHTML = ''
+        mostrarTituloVaciar.innerHTML = ''
+        contenedorCarrito.innerHTML = ''
+        opcionesCarrito.innerHTML = ''
         mostrarProductos()
     }
-    // finalizarCompra()
+    finalizarCompra()
 }
 
 
@@ -259,15 +274,14 @@ const finalizarCompra = () => {
     carrito.forEach(producto => {
         let cantidad = producto.cantidad
         let newId = producto.id
-        productos[newId].stock -= cantidad
+        productos[newId].stock - cantidad
         productos[newId].cantidad = 1
     }) 
     carrito = []
-    mostrarCarrito()
-    mostrarProductos()
-    
     // vaciar localStorage 
     localStorage.removeItem('carrito')
+
+    mostrarProductos()
 }
 
 

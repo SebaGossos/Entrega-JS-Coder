@@ -4,14 +4,33 @@
 .mostrar{
     @include m.grid(3,3rem);
     margin: 0 0 2rem;
-    &__texto{
-        color: v.$grisOscuro;
+    &__texto,
+    &__cantidad,
+    &__total{
+        color: v.$quinto;
         font-size: 3.2rem;
         font-weight: 600;
         margin: 0;
     }
+    &__cantidad{
+        margin:0 0 2rem;
+    }
+    
     &__mas,
     &__menos{
         @include m.boton2(v.$secundario, v.$blanco);
+        transition-property: background-color transform;
+        transition-duration: .3s;
+        
+        &:hover{
+            background-color: v.$terciario;
+            transform: scale(1.1) rotate(3deg);
+        }
     }
+    &__menos{
+        &:hover{
+            background-color: v.$quinto;
+        }
+    }
+
 }

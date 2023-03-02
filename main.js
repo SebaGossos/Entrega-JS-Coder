@@ -40,6 +40,7 @@ if(localStorage.getItem('carrito')){
     })
 }
 
+
 // Modificamos el DOM
 const contenedorProductos = document.getElementById('contenedorProductos')
 
@@ -63,7 +64,7 @@ const mostrarProductos = () => {
                             <h2 class="card__heading">${producto.nombre}</h2>
                             <p class="card__stock">Stock: ${producto.stock} Unidades</p>
                             <p class="card__price">$ ${producto.precio}</p>
-                        <button class="card__boton" id="boton${producto.id}">Agregar</button>`
+                            <button class="card__boton" id="boton${producto.id}">Agregar</button>`
         contenedorProductos.appendChild(li)
 
         // Agregar productos al carrito
@@ -76,14 +77,36 @@ const mostrarProductos = () => {
 mostrarProductos()
 
 // MOSTRAR CARRITO
+
+const mostrarTituloVaciar = document.getElementById('mostrarTituloVaciar')
 const contenedorCarrito = document.getElementById('carritoJs')
 const verCarrito = document.getElementById('verCarrito')
+const botonVaciarCarrito = document.createElement('button')
 
 verCarrito.addEventListener('click', () => {
-    mostrarCarrito()
+    if (carrito.length > 0){
+        mostrarCarrito()
+    }else{
+        alert('No hay productos en el carrito!')
+    }
 })
+
 const mostrarCarrito = () => {
+
     contenedorCarrito.innerText = ''
+        // Agregar html antes de mostrar carrito
+        const tituloCarrito = document.createElement('h2')
+        
+        mostrarTituloVaciar.innerText = ''
+    
+        tituloCarrito.classList.add('carrito__heading', 'principal__heading')
+        tituloCarrito.innerText = 'Carrito de Compras'
+        botonVaciarCarrito.classList.add('card__boton', 'carrito__boton')
+        botonVaciarCarrito.innerText = 'Vaciar Carrito'
+    
+        mostrarTituloVaciar.append(tituloCarrito, botonVaciarCarrito)
+
+    // Crear las cards de cada producto dentro del carrito
     carrito.forEach(producto => {
         const li = document.createElement('li')
         li.classList.add('card')
@@ -100,7 +123,7 @@ const mostrarCarrito = () => {
                             <button class="mostrar__mas" id="agregar${producto.id}">+</button>
                             <button class="mostrar__menos" id="restar${producto.id}">-</button>
                         </div>
-                        <button class="card__boton" id="eliminar${producto.id}">Eliminar</button>`
+                        <button class="card__boton card__boton-eliminar" id="eliminar${producto.id}">Eliminar</button>`
         contenedorCarrito.appendChild(li)
 
         // Eliminar Productos desde el carrito
@@ -119,7 +142,56 @@ const mostrarCarrito = () => {
         const botonRestar = document.getElementById(`restar${producto.id}`)
         botonRestar.addEventListener('click', () => restarProducto(producto.id))
     })
+    mostrarOpcionesCarrito()
+}
+
+const opcionesCarrito = document.getElementById('mostrarOpcionesCarrito')
+
+const mostrarOpcionesCarrito = () =>{
+    // Agregando el boton de compra y el total
+    opcionesCarrito.className = 'carrito__finalizar'
+    opcionesCarrito.innerHTML = `   <p class="carrito__total" id="total"></p>
+                                            <button id="comprar" class="card__boton carrito__comprar">Comprar</button>`
     calcularTotal()
+    // Finalizar Compra
+    const botonComprar = document.getElementById('comprar')
+    botonComprar.addEventListener('click', () => comprarProductos(calcularTotal()))
+}
+
+
+                    
+const contenedorCompra = document.getElementById('contenedorCompra')
+
+const comprarProductos = (total) => {
+    const comprarUl = document.getElementById('finalizarCompra')
+    resetearHtml.className = 'contenedor principal cards'
+    carrito.forEach(producto => {
+        const li = document.createElement('li')
+        li.className='card'
+        li.innerHTML = `<div class="card__imagen">
+                            <picture>
+                                <source srcset="${producto.imagen}.avif" type="image/avif">
+                                <source srcset="${producto.imagen}.webp" type="image/webp">
+                                <img loading="lazy" src="${producto.imagen}.jpg" width="" height="" alt="imagen bebida">
+                            <picture>
+                        </div>
+                        <h2 class="card__heading">${producto.nombre}</h2>
+                        <p class="mostrar__cantidad"> Cantidad: ${producto.cantidad}</p>
+                        <p class="mostrar__total"> Total: $${producto.cantidad * producto.precio}</p>
+                        `
+        comprarUl.appendChild(li)
+    })
+    contenedorCompra.innerHTML = `  <p class="carrito__total" id="total">Total: $${total}</p>
+                                    <button class="card__boton carrito__comprar" id="menuPrincipal">Menu Principal</button>
+                                `
+                                
+                                
+    const botonMenuPrincipal = document.getElementById('menuPrincipal')
+    botonMenuPrincipal.onclick = () => {
+
+        mostrarProductos()
+    }
+    // finalizarCompra()
 }
 
 
@@ -142,14 +214,14 @@ const agregarAlCarrito = (id) => {
 }
 
 // Calcular el total de la compra 
-const total = document.getElementById('total')
-total.className = 'carrito__total'
 const calcularTotal = () => {
+    const total = document.getElementById('total')
     let totalCompra = 0
     carrito.forEach(producto => {
         totalCompra += producto.precio * producto.cantidad
     })
-    total.innerHTML = `Total: $${totalCompra}`
+    total.innerHTML = `Total $${totalCompra}`
+    return totalCompra
 }
 
 // Sumar +++++++++++++
@@ -182,6 +254,22 @@ const restarProducto = (id) => {
 
 }
 
+// Comprar
+const finalizarCompra = () => {
+    carrito.forEach(producto => {
+        let cantidad = producto.cantidad
+        let newId = producto.id
+        productos[newId].stock -= cantidad
+        productos[newId].cantidad = 1
+    }) 
+    carrito = []
+    mostrarCarrito()
+    mostrarProductos()
+    
+    // vaciar localStorage 
+    localStorage.removeItem('carrito')
+}
+
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -204,11 +292,13 @@ const eliminarDelCarrito = (id) => {
 }
 
 // Vaciar TODO el Carrito
-const vaciarCarrito = document.getElementById('vaciarCarrito')
-vaciarCarrito.addEventListener('click', () => {
+
+botonVaciarCarrito.addEventListener('click', () => {
+    mostrarTituloVaciar.innerHTML = ''
+    contenedorCarrito.innerHTML = ''
+    opcionesCarrito.innerHTML = ''
     eliminarTodoElCarrito()
 })
-
 eliminarTodoElCarrito = () => {
     carrito.forEach(producto => {
         let cantidad = producto.cantidad
@@ -217,7 +307,7 @@ eliminarTodoElCarrito = () => {
         productos[newId].cantidad = 1
     }) 
     carrito = []
-    mostrarCarrito()
+
     mostrarProductos()
     
     // vaciar localStorage 

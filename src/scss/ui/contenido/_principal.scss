@@ -1,7 +1,8 @@
+@use '../../base/variables' as v;
 .principal{
-
+    margin-bottom: v.$separacion;
     &__heading{
         font-weight: 700;
         text-align: center;
     }
-}
+} 

@@ -19,27 +19,33 @@
 
     &__heading{
         font-weight: 400;
+        margin-bottom: 2rem;
     }
     &__stock{
         margin: 0 0 2rem;
         font-size: 2.7rem; 
         font-weight: 600;
-        color: v.$secundario;
-
+        color: v.$cuarto;
     }
     &__price{
-        color: v.$grisOscuro;
+        color: v.$quinto;
         font-size: 3.2rem;
         font-weight: 600;
         margin: 0 0 2rem;
     }
     &__boton{
         @include m.boton(v.$primario, v.$blanco);
-        transition: background-color .33s;
+        transition: all .33s;
         &:hover{
-            background-color: v.$secundario;
+            background-color: v.$cuarto;
+            transform: scale(1.1);
             border: 0;
-        } 
+        }
+    }
+    &__boton-eliminar{
+        &:hover{
+            background-color: v.$gris;
+        }
     }
     &--coca{
         width: 100%;

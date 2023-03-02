@@ -16,36 +16,42 @@
     <!-- Header -->
     <header class="header">
         <div class="contenedor header__logo">
-            <picture>
-                <source srcset="build/img/central.avif" type="image/avif">
-                <source srcset="build/img/central.webp" type="image/webp">
-                <img class="header__imagen" loading="lazy" src="build/img/central.jpg" width="" height=""
-                    alt="logo Central Bebidas">
+            <a href="index.html">
                 <picture>
+                        <source srcset="build/img/central.avif" type="image/avif">
+                        <source srcset="build/img/central.webp" type="image/webp">
+                        <img class="header__imagen" loading="lazy" src="build/img/central.jpg" width="" height=""
+                            alt="logo Central Bebidas">
+                <picture>
+            </a>    
         </div>
     </header>
 
-    <!-- Productos -->
-    <main class="principal">
+    
+
+    <main class="principal" id="sectionCarrito">
+        
+        <!-- Productos -->
         <h1 class="principal__heading">Nuestros productos!</h1>
         <ul id="contenedorProductos" class="contenedor seccion cards">
             <!-- Added nodes by JS -->
         </ul>
-    </main>
-
-    <!-- Mostrar Carrito -->
-    <section class="contenedor carrito">
-        <h2 class="carrito__heading principal__heading">Carrito de Compras:</h2>
-        <div class="carrito__opciones">
+        
+        <!-- Mostrar Carrito -->
+        <section class="contenedor carrito">
             <button class="card__boton carrito__boton" id="verCarrito">Mostrar Carrito</button>
-            <button class="card__boton carrito__boton" id="vaciarCarrito">Vaciar Carrito</button>
-        </div>
-        <p id="total"><!-- Added nodes by JS --></p>
-        <ul class="cards " id="carritoJs">
-            <!-- Added nodes by JS -->
-        </ul>
-    </section>
+            <div id="mostrarTituloVaciar">
 
+            </div>
+            <ul class="cards seccion" id="carritoJs">
+                <!-- Added nodes by JS -->
+            </ul>
+            <div id="mostrarOpcionesCarrito">
+
+            </div>
+        </section>
+    </main>
+    <div class="contenedor carrito__finalizar" id="contenedorCompra"></div>
     <script src="./main.js"></script>
     <!-- <script src="./main2.js"></script> -->
 </body>

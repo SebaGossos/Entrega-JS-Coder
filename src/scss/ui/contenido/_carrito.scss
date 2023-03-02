@@ -3,19 +3,33 @@
 
 .carrito{
     &__total{
-        color: v.$secundario;
+        color: v.$quinto;
         font-weight: 600;
         font-size: 5rem;
-
-    }
-    &__opciones{
-        display: flex;
-        justify-content: space-around;
-        margin-bottom: v.$separacion;
+        margin: 0;
+        
     }
     &__boton{
-        display: inline-block;
+        display: block;
         width: 33%;
+        margin: 0 auto v.$separacion;
+        &:hover{
+            background-color: v.$quinto;
+        } 
+    }
+    &__finalizar{
+        display: flex;
+        flex-direction: row-reverse;
+        flex-basis: 1;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &__comprar{
+        padding: 2rem 8rem;
+        font-size: 5rem;
+        &:hover{
+            background-color: v.$terciario;
+        } 
     }
 }
 

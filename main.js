@@ -215,13 +215,18 @@ const comprarProductos = (total) => {
 const agregarAlCarrito = (id) => {
     const productoCarrito = carrito.find(producto => producto.id === id)
     if(productoCarrito) {
-        productoCarrito.cantidad++
-        productoCarrito.stock--
+        if(productoCarrito.stock < 1){
+            alert(`No hay mas stock que ${productoCarrito.cantidad} unidades por el momento!`)
+        }else{
+            productoCarrito.cantidad++
+            productoCarrito.stock--
+        }
     }else {
         const producto = productos.find(producto => producto.id === id)
         producto.stock--
         carrito.push(producto)
     }
+
     // ALMACENAR EN LOCALSTORAGE 
     localStorage.setItem('carrito', JSON.stringify(carrito))
     mostrarProductos()
@@ -275,6 +280,9 @@ const finalizarCompra = () => {
         let cantidad = producto.cantidad
         let newId = producto.id
         productos[newId].stock - cantidad
+        // if(prouductos[newId].stock === 1){
+        //     prouductos[newId].cantidad = 0
+        // }
         productos[newId].cantidad = 1
     }) 
     carrito = []

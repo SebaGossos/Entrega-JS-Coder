@@ -1,8 +1,27 @@
 @use '../../base/variables' as v;
+@use '../../base/mixins' as m;
 .principal{
-    margin-bottom: v.$separacion;
+    margin-bottom: - v.$separacion * 3;
+    border-top: 3px solid v.$cuarto;
+    background-color: v.$blanco;
+    position: relative;
+    padding-bottom: v.$separacion * 2;
+    border-bottom-right-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+
     &__heading{
+        color: v.$primario;
         font-weight: 700;
         text-align: center;
+        margin-top: v.$separacion;
+        @include m.telefono {
+            font-size: 4.4rem;
+        }
+        @include m.tablet {
+            font-size: 7rem;
+        }
+        @include m.desktop { 
+            margin-top: v.$separacion + 2rem;
+        }
     }
 } 

@@ -41,6 +41,18 @@
             transform: scale(1.1);
             border: 0;
         }
+        &--volverMenu{
+            width: 50%;
+            padding: 2rem 4rem;
+            font-size: 2.3rem;
+            &:hover{
+                background-color: v.$terciario;
+            } 
+            @include m.tablet {
+                padding: 2rem 3rem;
+                font-size: 3.5rem;
+            }
+        }
     }
     &__boton-eliminar{
         &:hover{
@@ -58,3 +70,4 @@
         } 
     }
 }
+

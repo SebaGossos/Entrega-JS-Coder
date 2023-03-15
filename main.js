@@ -1,7 +1,6 @@
 // Creamos Nuestros Productos con Objetos
 let id = 0 // => Variable id Global
 
-
 // -------------------CREATE
 class Producto{
     constructor( imagen, nombre, precio, stock){
@@ -23,7 +22,6 @@ const terma = new Producto('build/img/terma', 'Terma', 299, 33)
 
 //Crear un array con catálogo de productos
 const productos = [bacardi, cocaCola, fernet, gancia, jackDaniels, terma]
-
 // Array para el carrito
 let carrito = []
 
@@ -41,14 +39,39 @@ if(localStorage.getItem('carrito')){
 }
 
 
-// Modificamos el DOM
-const contenedorProductos = document.getElementById('contenedorProductos')
-
 
 
 ///////////////////////////////////////////////////////////////////////
 // -------------------READ
+// TRABAJANDO EN EL HEADER 
+
+// INICIO
+const botonInicioSesion = document.getElementById('botonIniciarSesion')
+const contenedorRegistro = document.getElementById('contenedorRegistro')
+
+
+
+const inicioSesion = () => {
+    contenedorRegistro.className = 'formulario'
+    contenedorRegistro.innerHTML = `<form class="formulario__inicio">
+                                        <div class="formulario__campo">
+                                            <label for="usuario" class="formulario__label">Usuario</label>
+                                            <input id="usuario" class="formulario__input" placeholder="Coloque su usuario" type="text">
+                                        </div>
+                                        <div class="formulario__campo">
+                                            <label for="contraseña" class="formulario__label">Contraseña</label>
+                                            <input id="contraseña" class="formulario__input" placeholder="Coloque su contraseña" type="text">
+                                        </div>
+                                    </form>`
+}
+botonInicioSesion.addEventListener('click', () => inicioSesion())
+
+
 // MOSTRAR PRODUCTOS
+// Modificamos el DOM
+const contenedorProductos = document.getElementById('contenedorProductos')
+
+
 const mostrarProductos = () => {
     contenedorProductos.innerHTML = ''
     productos.forEach( producto => {
@@ -77,13 +100,13 @@ const mostrarProductos = () => {
 mostrarProductos()
 
 // MOSTRAR CARRITO
-
 const mostrarTituloVaciar = document.getElementById('mostrarTituloVaciar')
 const contenedorCarrito = document.getElementById('carritoJs')
 const verCarrito = document.getElementById('verCarrito')
 const botonVaciarCarrito = document.createElement('button')
 
 verCarrito.addEventListener('click', () => {
+    // Si existen productos en el carrito los mostras, si no vacia el html y avisa que no hay!
     if (carrito.length > 0){
         mostrarCarrito()
     }else{
@@ -95,18 +118,18 @@ verCarrito.addEventListener('click', () => {
 })
 
 const mostrarCarrito = () => {
-
     contenedorCarrito.innerText = ''
-        // Agregar html antes de mostrar carrito
+
+        // Agregar html en la seccion carrito antes de mostrar los productos
         const tituloCarrito = document.createElement('h2')
-        
         mostrarTituloVaciar.innerText = ''
     
-        tituloCarrito.classList.add('carrito__heading', 'principal__heading')
+        tituloCarrito.classList.add('carrito__heading')
         tituloCarrito.innerText = 'Carrito de Compras'
         botonVaciarCarrito.classList.add('card__boton', 'carrito__boton')
         botonVaciarCarrito.innerText = 'Vaciar Carrito'
-    
+
+        // Agregando al contenedor
         mostrarTituloVaciar.append(tituloCarrito, botonVaciarCarrito)
 
     // Crear las cards de cada producto dentro del carrito
@@ -128,8 +151,9 @@ const mostrarCarrito = () => {
                         </div>
                         <button class="card__boton card__boton-eliminar" id="eliminar${producto.id}">Eliminar</button>`
         contenedorCarrito.appendChild(li)
+        contenedorCarrito.classList.add('seccion')
 
-        // Eliminar Productos desde el carrito
+        // Boton eliminar productos desde el carrito
         const boton = document.getElementById(`eliminar${producto.id}`)
         boton.addEventListener('click', () => {
             eliminarDelCarrito(producto.id)
@@ -149,16 +173,17 @@ const mostrarCarrito = () => {
 }
 
 const opcionesCarrito = document.getElementById('mostrarOpcionesCarrito')
-
 const mostrarOpcionesCarrito = () =>{
     // Agregando el boton de compra y el total
     opcionesCarrito.className = 'carrito__finalizar'
     opcionesCarrito.innerHTML = `   <p class="carrito__total" id="total"></p>
-                                            <button id="comprar" class="card__boton carrito__comprar">Comprar</button>`
+                                    <button id="comprar" class="card__boton carrito__comprar">Comprar</button>`
     calcularTotal()
     // Finalizar Compra
     const botonComprar = document.getElementById('comprar')
     botonComprar.addEventListener('click', () => {
+        contenedorCarrito.className = 'cards'
+        localStorage.setItem('carrito', JSON.stringify(carrito))
         comprarProductos(calcularTotal())
     })
 }
@@ -172,7 +197,7 @@ const comprarProductos = (total) => {
     contenedorCarrito.innerHTML = ''
     opcionesCarrito.innerHTML = ''
     const ul = document.createElement('ul')
-    ul.className = 'contenedor principal cards'
+    ul.className = 'contenedor cards seccion'
     carrito.forEach(producto => {
         const li = document.createElement('li')
         li.className='card'
@@ -193,7 +218,7 @@ const comprarProductos = (total) => {
     const volverMenu = document.getElementById('volverMenu')
     volverMenu.innerHTML = `     
                                         <p class="carrito__total" id="total">Compra Realizada de: $${total}!!</p>
-                                        <button class="card__boton carrito__comprar" id="menuPrincipal">Menu Principal</button>
+                                        <button class="card__boton card__boton--volverMenu" id="menuPrincipal">Menu Principal</button>
                                 `
                                 
                                 

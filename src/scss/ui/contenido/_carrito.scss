@@ -2,14 +2,25 @@
 @use '../../base/variables' as v;
 
 .carrito{
+    &__heading{
+        color: v.$quinto;
+        font-weight: 700;
+        text-align: center;
+        @include m.telefono {
+            font-size: 4rem;
+        }
+        @include m.tablet {
+            font-size: 5.5rem;
+        }
+    }
     &__total{
         color: v.$quinto;
         font-weight: 600;
-        font-size: 4rem;
-        margin: 0 0 v.$separacion;
+        font-size: 3.2rem;
         text-align: center;
-        @include m.desktop{
-            margin: 0;
+        margin: 0;
+        @include m.tablet {
+            font-size: 3.9rem;
         }
     }
     &__boton{
@@ -22,27 +33,32 @@
     }
     &__finalizar{
         display: flex;
-        flex-direction: row-reverse;
+        flex-direction: column;
         flex-basis: 1;
         justify-content: space-between;
         align-items: center;
+        gap: v.$separacion;
+        @include m.tablet {
+            flex-direction: row-reverse;
+        }
     }
     &__comprar{
-        padding: 2rem 8rem;
-        font-size: 5rem;
+        padding: 2rem 6rem;
+        font-size: 3.6rem;
         display: block;
-        margin: 0 auto;
+        margin: 0 auto;    
         &:hover{
             background-color: v.$terciario;
         } 
+        @include m.tablet {
+            padding: 2rem 8rem;
+            font-size: 5rem;
+            margin: 0;
+        }
     }
     &__menuPrincipal{
-        
-        @include m.desktop{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        @include m.grid(1, v.$separacion);
+        justify-items: center;
     } 
 }
 

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../build\img\centralSolo.png">
-    <title>DE BEBIDAS - REGISTRO</title>
+    <title>DE BEBIDAS - registrar</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -13,8 +13,8 @@
 </head>
     
 <body>
-
-    <header class="contenedor header">
+    <!-- HEADER -->
+    <header class="contenedor header header--registrar registrar__header">
         <div class="header__logo">
             <a href="../index.html">
                 <picture>
@@ -26,12 +26,83 @@
             </a>
         </div>
         <div id="contenedorRegistro" class="registro">
-            <a href="#" id="botonIniciarSesion" class="registro__inicioSesion">Iniciar Sesión</a>
-            <a href="../pages/register.html" id="botonCrearSesion" class="registro__crearCuenta">Crear Cuenta</a>
+            <a href="../index.html" id="botonIniciarSesion" class="registro__inicioSesion registrar__volver">Inicio</a>
         </div>
     </header>
 
-    <a href="../index.html">aaaaaaaaaaa</a>
+    <!-- FORMULARIO -->
+    <main class="contenedor registrar">
+        <h2 class="registrar__heading">Registro de Usario</h2>
+        <div class="registrar__contenedor">
+            <form class="registrar__formulario" action="">
+                <div class="registrar__campo">
+                    <label class="registrar__label" for="nombre">Nombre</label>
+                    <input class="registrar__input" type="text" id="nombre" placeholder="Tu Nombre">
+                </div>
+                <div class="registrar__campo">
+                    <label class="registrar__label" for="apellido">Apellido</label>
+                    <input class="registrar__input" type="text" id="apellido" placeholder="Tu Apellido">
+                </div>
+                <div class="registrar__campo">
+                    <label class="registrar__label" for="email">Email</label>
+                    <input class="registrar__input" type="email" id="email" placeholder="Tu Email">
+                </div>
+
+                <div class="registrar__campo">
+                    <label class="registrar__label" for="fecha">Fecha de nacimiento</label>
+                    <input class="registrar__input" type="date" id="edad">
+                </div>
+
+                <div class="registrar__campo--submit">
+                    <input id="enviarFormularioRegistro" class="registrar__input--submit" type="submit" value="Enviar">
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <section class="contenedor footer__grid">
+            <div class="footer__flex">
+                <div class="footer__img">
+                    <a target="_blank" href="https://www.facebook.com/central.de.bebidas.mendoza/">
+                        <picture>
+                            <source srcset="../build/img/face.avif" type="image/avif">
+                            <source srcset="../build/img/face.webp" type="image/webp">
+                            <img loading="lazy" src="../build/img/face.png" width="" height="" alt= "logo facebook" >
+                        <picture>
+                    </a>
+                </div>
+                <div class="footer__img">
+                    <a target="_blank" href="https://www.instagram.com/centralde.bebidas/">
+                        <picture>
+                            <source srcset="../build/img/insta.avif" type="image/avif">
+                            <source srcset="../build/img/insta.webp" type="image/webp">
+                            <img loading="lazy" src="../build/img/insta.png" width="" height="" alt= "logo instagram" >
+                        <picture>
+                    </a>
+                </div>
+                <div class="footer__img">
+                    <a target="_blank" href="https://api.whatsapp.com/send/?phone=5402612381111">
+                        <picture>
+                            <source srcset="../build/img/wssp.avif" type="image/avif">
+                            <source srcset="../build/img/wssp.webp" type="image/webp">
+                            <img loading="lazy" src="../build/img/wssp.png" width="" height="" alt= "logo whatsapp" >
+                        <picture>
+                    </a>
+                </div>
+            </div>
+            <div class="footer__flex">
+                <a href="#">
+                    <h3 class="footer__terminos">Terminos y Condiciones</h3>
+                </a>
+                <a href="#">
+                    <h3 class="footer__about">About me :)</h3>
+                </a>
+            </div>
+        </section>
+    </footer>
+
     <script src="../js/register.js"></script>
 </body>
 </html>

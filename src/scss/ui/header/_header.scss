@@ -16,7 +16,10 @@
         height: 20rem;
         margin-bottom: v.$separacion;
     }
-
+    &--registrar{
+        flex-direction: column;
+        height: auto;
+    }
     &__logo{
         width: 40rem;
         transition: transform .33s;
@@ -129,6 +132,17 @@
             height: 2.5rem;
             font-size: 1.5rem;
             text-align: start;
+        }
+    }
+    &__boton{
+        @include m.boton(v.$secundario, v.$blanco);
+        font-size: 2rem;
+        font-weight: 500;
+        padding: 1rem;
+        transition: all .33s;
+        &:hover{
+            background-color: v.$cuarto;
+            transform: scale(0.9) rotate(2deg);
         }
     }
 }

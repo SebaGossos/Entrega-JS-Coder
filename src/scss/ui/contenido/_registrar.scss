@@ -1,0 +1,74 @@
+@use '../../base/mixins' as m;
+@use '../../base/variables' as v;
+
+
+
+
+.registrar{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: - v.$separacion * 3;
+    border-radius: 2rem;
+    background-color: v.$blanco;
+    position: relative;
+    &__header{
+        margin-top: 0;
+        margin-bottom: v.$separacion * 2;
+        @include m.desktop {
+            margin-bottom: v.$separacion;
+        }
+    }
+    &__volver{
+        font-size: 5rem;
+        &:hover{
+            color: v.$quinto;
+        }
+    }
+    &__heading{
+        color: v.$primario;
+        @include m.telefono {
+            font-size: 5rem;
+        }
+    }
+    &__contenedor{
+        margin-bottom: (v.$separacion - 1.2) ;
+    }
+    &__formulario{
+        display: flex;
+        flex-direction: column;
+        gap: v.$separacion;
+    }
+    &__campo{
+        @include m.grid(2, 3rem);
+
+        &--submit{
+            margin: 0 auto;
+        }
+    }
+    &__label{
+        font-size: 3rem;
+        color: v.$quinto;
+
+    }
+    &__input{
+        text-align: center;
+        border-radius: .5rem;
+        border-color: v.$primario;
+        border-width: .25rem;
+        font-size: 2rem;
+        @include m.desktop {
+            font-size: 1.9rem;
+            text-align: start;
+        }
+    }
+    &__input--submit{
+        @include m.boton(v.$primario, v.$blanco);
+        padding: 1rem 3rem;
+        transition: all .33s;
+        &:hover{
+            transform: scale(1.1) rotate(-2deg);
+        }
+    }
+}

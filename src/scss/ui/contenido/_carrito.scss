@@ -25,8 +25,15 @@
     }
     &__boton{
         display: block;
-        width: 33%;
+        width: 50%;
         margin: 0 auto v.$separacion;
+        font-size: 2rem;
+        padding: 2rem 1rem;
+        @include m.tablet {
+            font-size: 3rem;
+            width: 35%;
+            padding: 2rem 4rem;
+        }
         &:hover{
             background-color: v.$quinto;
         } 

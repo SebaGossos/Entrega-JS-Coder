@@ -2,8 +2,10 @@
 let id = 0 // => Variable id Global
 
 // -------------------CREATE
+
+// CLASES-------------------
 class Producto{
-    constructor( imagen, nombre, precio, stock){
+    constructor(imagen, nombre, precio, stock){
         this.id = id 
         this.imagen = imagen
         this.nombre = nombre
@@ -20,6 +22,9 @@ const gancia = new Producto('build/img/gancia', 'Gancia', 1199, 16)
 const jackDaniels = new Producto('build/img/jackDaniels', 'Jack Daniel`s', 9999, 29)
 const terma = new Producto('build/img/terma', 'Terma', 299, 33)
 
+
+
+//PRODUCTOS
 //Crear un array con catálogo de productos
 const productos = [bacardi, cocaCola, fernet, gancia, jackDaniels, terma]
 // Array para el carrito
@@ -39,18 +44,13 @@ if(localStorage.getItem('carrito')){
 }
 
 
-
-
 ///////////////////////////////////////////////////////////////////////
 // -------------------READ
-// TRABAJANDO EN EL HEADER 
+// HEADER---------------
 
 // INICIO
 const botonInicioSesion = document.getElementById('botonIniciarSesion')
 const contenedorRegistro = document.getElementById('contenedorRegistro')
-
-
-
 const inicioSesion = () => {
     contenedorRegistro.className = 'formulario'
     contenedorRegistro.innerHTML = `<form class="formulario__inicio">
@@ -62,15 +62,14 @@ const inicioSesion = () => {
                                             <label for="contraseña" class="formulario__label">Contraseña</label>
                                             <input id="contraseña" class="formulario__input" placeholder="Coloque su contraseña" type="text">
                                         </div>
+                                        <button id="botonISesion" class="formulario__boton">Inciciar Sesion</button>
                                     </form>`
 }
 botonInicioSesion.addEventListener('click', () => inicioSesion())
 
-
 // MOSTRAR PRODUCTOS
 // Modificamos el DOM
 const contenedorProductos = document.getElementById('contenedorProductos')
-
 
 const mostrarProductos = () => {
     contenedorProductos.innerHTML = ''

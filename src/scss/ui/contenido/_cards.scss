@@ -36,6 +36,7 @@
     &__boton{
         @include m.boton(v.$primario, v.$blanco);
         transition: all .33s;
+
         &:hover{
             background-color: v.$cuarto;
             transform: scale(1.1);

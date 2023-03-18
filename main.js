@@ -316,8 +316,6 @@ const finalizarCompra = () => {
     mostrarProductos()
 }
 
-
-
 ///////////////////////////////////////////////////////////////////////
 // -------------------DELET
 // Eliminar 1 producto del carrito

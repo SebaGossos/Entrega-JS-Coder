@@ -1,5 +1,6 @@
 // Creamos Nuestros Productos con Objetos
 let id = 0 // => Variable id Global
+let inicioSesion = false
 
 // -------------------CREATE
 
@@ -30,7 +31,6 @@ const productos = [bacardi, cocaCola, fernet, gancia, jackDaniels, terma]
 // Array para el carrito
 let carrito = []
 
-
 // CARGAR CARRITO DESDE LOCALSTORAGE
 // Si hay algo en el localStorage lo cargamos en el carrito y actualizamos el array de productos con los valores del localStorage del carrito.
 if(localStorage.getItem('carrito')){
@@ -43,6 +43,18 @@ if(localStorage.getItem('carrito')){
     })
 }
 
+// Array de usuarios
+let usuarios = []
+
+if(localStorage.getItem('usuarios')){
+    let usuariosLocalStorage = JSON.parse(localStorage.getItem('usuarios'))
+    usuarios = []
+    usuariosLocalStorage.forEach(usuario => {
+        usuarios.push(usuario)
+    })
+    id = usuarios.length
+}
+
 
 ///////////////////////////////////////////////////////////////////////
 // -------------------READ
@@ -51,7 +63,7 @@ if(localStorage.getItem('carrito')){
 // INICIO
 const botonInicioSesion = document.getElementById('botonIniciarSesion')
 const contenedorRegistro = document.getElementById('contenedorRegistro')
-const inicioSesion = () => {
+const panelDeInicioSesion = () => {
     contenedorRegistro.className = 'formulario'
     contenedorRegistro.innerHTML = `<form class="formulario__inicio">
                                         <div class="formulario__campo">
@@ -59,13 +71,40 @@ const inicioSesion = () => {
                                             <input id="usuario" class="formulario__input" placeholder="Coloque su usuario" type="text">
                                         </div>
                                         <div class="formulario__campo">
-                                            <label for="contraseña" class="formulario__label">Contraseña</label>
-                                            <input id="contraseña" class="formulario__input" placeholder="Coloque su contraseña" type="text">
+                                            <label for="contrasena" class="formulario__label">Contraseña</label>
+                                            <input id="contrasena" class="formulario__input" placeholder="Coloque su contraseña" type="text">
                                         </div>
                                         <button id="botonISesion" class="formulario__boton">Inciciar Sesion</button>
                                     </form>`
+    const botonCierreInicioSesion = document.getElementById('botonISesion')
+    botonCierreInicioSesion.addEventListener('click', () => {
+        const campoUsuarioIniciar = document.getElementById('usuario').value
+        const campoContrasenaIniciar = document.getElementById('contrasena').value
+        let verificar = []
+        usuarios.find(usuario => {
+            if(usuario.email === campoUsuarioIniciar & 
+                usuario.contrasena === campoContrasenaIniciar){
+                verificar.push(usuario)
+            }
+        })
+        comprobarValidacion(verificar)
+    })
 }
-botonInicioSesion.addEventListener('click', () => inicioSesion())
+botonInicioSesion.addEventListener('click', () => panelDeInicioSesion())
+
+
+
+const comprobarValidacion = (datos) => {
+    if(datos.length === 1){
+        contenedorRegistro.className = ''
+        contenedorRegistro.innerText = `Bienvenido ${datos[0].nombre}!`
+        inicioSesion = true
+    }else{
+        alert('Datos Incorrectos!')
+    }
+}
+
+
 
 // MOSTRAR PRODUCTOS
 // Modificamos el DOM
@@ -181,9 +220,13 @@ const mostrarOpcionesCarrito = () =>{
     // Finalizar Compra
     const botonComprar = document.getElementById('comprar')
     botonComprar.addEventListener('click', () => {
-        contenedorCarrito.className = 'cards'
-        localStorage.setItem('carrito', JSON.stringify(carrito))
-        comprarProductos(calcularTotal())
+        if(inicioSesion === true){
+            contenedorCarrito.className = 'cards'
+            localStorage.setItem('carrito', JSON.stringify(carrito))
+            comprarProductos(calcularTotal())
+        }else{
+            alert('Debes iniciar Sesion!')
+        }
     })
 }
 

@@ -1,11 +1,11 @@
-
+let id = 0
 // COMPROBAR QUE EL USUARIO A REGISTRAR SEA VALIDO!!
 // Class
 class Usuario{
-    constructor(nombre, apellido, email, edad){
+    constructor(nombre, contrasena, email, edad){
         this.id = id
         this.nombre = nombre
-        this.apellido= apellido
+        this.contrasena = contrasena
         this.email = email
         this.edad = edad
         id++
@@ -22,9 +22,7 @@ if(localStorage.getItem('usuarios')){
         usuarios.push(usuario)
     })
     id = usuarios.length
-
 }
-
 
 // CREANDO USUARIOS
 // DOM FORMULARIO
@@ -33,22 +31,22 @@ const formulario = document.getElementById('formulario')
 formulario.addEventListener('submit', (e) => {
     e.preventDefault()
     const campoNombre = document.getElementById('nombre').value
-    const campoApellido = document.getElementById('apellido').value
+    const campoContrasena = document.getElementById('contrasena').value
     const campoEmail = document.getElementById('email').value
     const campoEdad = document.getElementById('edad').value
-    agregarUsuario(campoNombre, campoApellido, campoEmail, campoEdad)
-    // formulario.reset()
+    agregarUsuario(campoNombre, campoContrasena, campoEmail, campoEdad)
+    // 
 })
 
-const agregarUsuario = (nombre, apellido, email, edad) => {
-    if (nombre === '' | apellido === '' | email === '' | edad === ''){
+const agregarUsuario = (nombre, contrasena, email, edad) => {
+    if (nombre === '' | contrasena === '' | email === '' | edad === ''){
         alert('Debes llenar todos los campos del formulario!!')
+        formulario.reset()
         document.getElementById('nombre').focus()
     }else{
-        crearUsuario(mayorEdad(edad), nombre, apellido, email, edad)
+        crearUsuario(mayorEdad(edad), nombre, contrasena, email, edad)
     }
 }
-
 
 const solicitarEdad = (edad) => {
     return new Promise((resolve, reject) => {
@@ -60,25 +58,24 @@ const solicitarEdad = (edad) => {
     })
 }
 
-const crearUsuario = (booleano, nombre, apellido, email, edad) => {
+const crearUsuario = (booleano, nombre, contrasena, email, edad) => {
     const respuesta = comprobarRepetidos(email)
     solicitarEdad(booleano)
     .then(() => {
         if(usuarios.length < 1){
-            const nuevoUsuario =  new Usuario(nombre, apellido, email, edad)
+            const nuevoUsuario =  new Usuario(nombre, contrasena, email, edad)
             usuarios.push(nuevoUsuario)
             localStorage.setItem('usuarios',JSON.stringify(usuarios))
         }else if(respuesta === true){
             alert('El Usuario ya ha sido creado!')
         }else{
-            const nuevoUsuario =  new Usuario(nombre, apellido, email, edad)
+            const nuevoUsuario =  new Usuario(nombre, contrasena, email, edad)
             usuarios.push(nuevoUsuario)
             localStorage.setItem('usuarios',JSON.stringify(usuarios))
         }
     })
     .catch((error) => error)
 }
-
 
 function comprobarRepetidos(email){
     let resultado = false
@@ -89,12 +86,6 @@ function comprobarRepetidos(email){
     })
     return resultado
 }
-
-
-
-
-
-
 
 function mayorEdad(edad){
     const fechaActual = new Date()

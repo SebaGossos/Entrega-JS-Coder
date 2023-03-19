@@ -68,11 +68,11 @@ const panelDeInicioSesion = () => {
     contenedorRegistro.innerHTML = `<form class="formulario__inicio">
                                         <div class="formulario__campo">
                                             <label for="usuario" class="formulario__label">Usuario</label>
-                                            <input id="usuario" class="formulario__input" placeholder="Coloque su usuario" type="text">
+                                            <input id="usuario" class="formulario__input" placeholder="Coloque su usuario" type="email">
                                         </div>
                                         <div class="formulario__campo">
                                             <label for="contrasena" class="formulario__label">Contraseña</label>
-                                            <input id="contrasena" class="formulario__input" placeholder="Coloque su contraseña" type="text">
+                                            <input id="contrasena" class="formulario__input" placeholder="Coloque su contraseña" type="password">
                                         </div>
                                         <button id="botonISesion" class="formulario__boton">Inciciar Sesion</button>
                                     </form>`

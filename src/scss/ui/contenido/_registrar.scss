@@ -32,6 +32,12 @@
             font-size: 5rem;
         }
     }
+    &__nombre{
+        color: v.$cuarto;
+        @include m.tablet {
+            font-size: 4rem;
+        }
+    }
     &__contenedor{
         margin-bottom: (v.$separacion - 1.2) ;
     }
